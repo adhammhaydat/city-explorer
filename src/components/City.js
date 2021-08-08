@@ -1,14 +1,31 @@
 import React, { Component } from 'react'
 import Main from './Main'
+import { Card } from 'react-bootstrap'
 
 export class City extends Component {
+  
+  
+  
+   
+  
   render() {
     return (
-      <div>
-        <h1>{this.props.cityName}</h1>
-        <h1>{this.props.lon}</h1>
-        <h1>{this.props.lat}</h1>
-      </div>
+      <>
+        {/* <Card style={{ width: '18rem' ,alignItems:'center',height:'30rem',margin:'1rem '}}>
+        <Card.Img style={{ width: '16rem',height:'40vh' }} 
+        // variant="top" src={this.props.image_url}
+          />
+        <Card.Body>
+          <Card.Title>{this.props.cityName}</Card.Title>
+          <Card.Text>
+          <span>{this.props.lat}</span>
+          <span>{this.props.lon}</span>
+
+          </Card.Text>
+        </Card.Body>
+      </Card> */}
+          {console.log("sdfsdf",this.props)}
+        </>
     )
   }
 }

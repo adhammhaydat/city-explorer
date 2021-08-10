@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
-import { Container,Row,Col } from 'react-bootstrap'
+import { Container,Row,Col,Alert } from 'react-bootstrap'
 
 export class Weather extends Component {
 
   render() {
     return (
       <div>
-        <Container fluid>
-          <Row>
+        <Container fluid style={{textAlign:"center"}}>
+          <Row> 
             <Col>
-              <h2>{this.props.dateOfCountry}</h2>
-              <h2>{this.props.description}</h2>
-            </Col>
+
+            <span>{this.props.dateOfCountry}</span>
+              <span>{this.props.description}</span>
+            <br/>
+              
+              </Col>
           </Row>
         </Container>
         

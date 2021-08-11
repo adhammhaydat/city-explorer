@@ -5,6 +5,7 @@ import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Weather from './Weather';
 import { Container, Row, Col,Alert } from 'react-bootstrap'
+import Movies from './Movies';
 
 
 
@@ -18,7 +19,10 @@ export class Main extends Component {
       messg: "",
       weatherSt: [],
       desplyErr: false,
-
+      weatherData: [],
+      displayWeather: true,
+      movisData:[],
+      displayMove:false,
     };
 
   }
@@ -27,22 +31,21 @@ export class Main extends Component {
 
     e.preventDefault();
 
-    let url = `https://us1.locationiq.com/v1/search.php?key=pk.60346fba30221450f0bd55e67928ff53&q=${e.target.city.value}&format=json`
+    let url = `https://us1.locationiq.com/v1/search.php?key=pk.5d26fb6c24e689ebb23ebfd89105b70b&q=${e.target.city.value}&format=json`
 
     axios.get(url).then(res => {
       let data = res.data[0]
-
-
       this.setState({
         cityName: data.display_name,
         lat: `lat: ${data.lat}`,
         lon: `lon: ${data.lon}`,
         mapUrl: `https://maps.locationiq.com/v3/staticmap?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&center=
         ${data.lat},${data.lon}&size=300x300&zoom=14&markers=icon:large-red-cutout&path=fillcolor:%2390EE90|weight:2|
-        color:blue|enc:}woiBkrk}Mb@iKtC\CEhBsD|C`,
+        color:blue|enc:}woiBkrk}Mb@iKtCCEhBsD|C`,
         desplyErr: false
       })
-      this.weather(this.state.cityName)
+    this.getWeathere(data.lat,data.lon)
+    this.getMovies(data.display_name)
     })
       .catch((error) => {
         // handle error
@@ -50,13 +53,11 @@ export class Main extends Component {
           desplyErr: true,
           messg: ` the city not found`
         })
-
-
       })
   }
   weather = (city) => {
-    let url = `http://localhost:8000/weather/${city.split(',')[0]}`
-
+    let url = `http://localhost:8000/weather/${city.split(',')[0].trim()}`
+console.log(city.split(',')[0].trim())
     axios.get(url).then(res => {
       let data = res.data
       console.log(data)
@@ -76,6 +77,46 @@ export class Main extends Component {
           weatherSt: []
         })
 
+
+      })
+  }
+  getWeathere=(lat,lon)=>{
+    
+    let url = `http://localhost:3000/weather/${lat}/${lon}`
+    axios.get(url).then(res => {
+    
+      this.setState({
+        weatherData: res.data,
+         displayWeather: true,
+      })
+    })
+      .catch((error) => {
+        // handle error
+        this.setState({
+          desplyErr: true,
+          messg:  error + ` weather Not Found for the location`
+        })
+
+      })
+  }
+
+  getMovies=(city)=>{
+    
+    let url = `http://localhost:3000/movies/${city.split(',')[0]}`
+    axios.get(url).then(res => {
+    
+      this.setState({
+        movisData: res.data,
+        displayMove: true,
+      })
+      console.log(res.data);
+    })
+      .catch((error) => {
+        // handle error
+        this.setState({
+          desplyErr: true,
+          messg:  error + ` movies Not Found for the location`
+        })
 
       })
   }
@@ -122,10 +163,15 @@ export class Main extends Component {
           </Card>
         </div>
 
-        {this.state.weatherSt && <>  {this.state.weatherSt.map((ele) => {
-          return (<Weather dateOfCountry={ele.date} description={ele.description} />)
+        {this.state.displayWeather && <>  {this.state.weatherData.map((ele,index) => {
+          return (<Weather key={index} dateOfCountry={ele.date} description={ele.description} />)
         })} </>}
 
+{this.state.displayMove && <>  {this.state.movisData.map((ele,index) => {
+          return (<Movies key={index} title={ele.title} popularity={ele.popularity} overview={ele.overview}
+          imgSrc={ele.image_url}
+          />)
+        })} </>}
       </div>
     );
   }

@@ -29,7 +29,7 @@ export class Main extends Component {
 
     e.preventDefault();
 
-    let url = `https://us1.locationiq.com/v1/search.php?key=pk.5d26fb6c24e689ebb23ebfd89105b70b&q=${e.target.city.value}&format=json`
+    let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_L_IQ_API}&q=${e.target.city.value}&format=json`
 
     axios.get(url).then(res => {
       let data = res.data[0]

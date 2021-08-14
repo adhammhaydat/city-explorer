@@ -56,7 +56,7 @@ export class Main extends Component {
 
   getWeathere = (lat, lon) => {
 
-    let url = `http://localhost:8000/weather/${lat}/${lon}`
+    let url = `${process.env.REACT_APP_SERVER_URL}/weather/${lat}/${lon}`
     axios.get(url).then(res => {
 
       this.setState({
@@ -76,7 +76,7 @@ export class Main extends Component {
 
   getMovies = (city) => {
 
-    let url = `http://localhost:8000/movies/${city.split(',')[0]}`
+    let url = `${process.env.REACT_APP_SERVER_URL}/movies/${city.split(',')[0]}`
     axios.get(url).then(res => {
 
       this.setState({
@@ -138,7 +138,7 @@ export class Main extends Component {
         </div>
 
         {this.state.displayWeather && <>  {this.state.weatherData.map((ele, index) => {
-          return (<Weather key={index} dateOfCountry={ele.date} description={ele.description} />)
+          return (<Weather key={index} dateOfCountry={ele.date} description={ele.description} displayWeather={this.state.displayWeather}/>)
         })} </>}
         <div style={{
           display: 'flex', flexDirection: "row",

@@ -6,8 +6,8 @@ export class Weather extends Component {
   render() {
     return (
       <div>
-        
-        <Container fluid style={{textAlign:"center"}}>
+        {this.props.displayWeather && <>
+          <Container fluid style={{textAlign:"center"}}>
           <Row> 
             <Col>
 
@@ -20,7 +20,8 @@ export class Weather extends Component {
               </Col>
           </Row>
         </Container>
-        
+        </>}
+       
       </div>
     )
   }

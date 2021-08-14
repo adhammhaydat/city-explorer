@@ -12,7 +12,7 @@ export class App extends Component {
         <Header/>
         <Main/>
         <Weather/>
-        <Movies/>
+        <div ><Movies/></div>
         <Footer/>
       </div>
     )

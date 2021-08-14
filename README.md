@@ -39,3 +39,24 @@ Finish time: 12am
 Actual time needed to complete: 10houer
 
 https://api.themoviedb.org/3/movie/550?api_key=f5356a61e35f07e882c6695ed15ea127
+
+Name of feature: weather (live).
+
+Estimate of time needed to complete: 2hours
+
+Start time: 2:00pm
+
+Finish time: 5pm
+
+Actual time needed to complete: 3hours
+
+Name of feature: movies.
+
+Estimate of time needed to complete: 2 hour
+
+Start time: 2:00pm
+
+Finish time: 5:30pm
+
+Actual time needed to complete: 3 hours
+

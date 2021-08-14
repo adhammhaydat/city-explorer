@@ -4,10 +4,8 @@ import { Card } from 'react-bootstrap';
 import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Weather from './Weather';
-import { Container, Row, Col,Alert } from 'react-bootstrap'
+import { Container, Row, Col, Alert } from 'react-bootstrap'
 import Movies from './Movies';
-
-
 
 export class Main extends Component {
   constructor(props) {
@@ -21,8 +19,8 @@ export class Main extends Component {
       desplyErr: false,
       weatherData: [],
       displayWeather: true,
-      movisData:[],
-      displayMove:false,
+      movisData: [],
+      displayMove: false,
     };
 
   }
@@ -44,8 +42,8 @@ export class Main extends Component {
         color:blue|enc:}woiBkrk}Mb@iKtCCEhBsD|C`,
         desplyErr: false
       })
-    this.getWeathere(data.lat,data.lon)
-    this.getMovies(data.display_name)
+      this.getWeathere(data.lat, data.lon)
+      this.getMovies(data.display_name)
     })
       .catch((error) => {
         // handle error
@@ -55,56 +53,32 @@ export class Main extends Component {
         })
       })
   }
-  weather = (city) => {
-    let url = `http://localhost:8000/weather/${city.split(',')[0].trim()}`
-console.log(city.split(',')[0].trim())
+
+  getWeathere = (lat, lon) => {
+
+    let url = `http://localhost:8000/weather/${lat}/${lon}`
     axios.get(url).then(res => {
-      let data = res.data
-      console.log(data)
 
-      this.setState({
-        weatherSt: data,
-        desplyErr: false,
-
-      })
-      console.log(this.state.weatherSt);
-    })
-      .catch((error) => {
-        // handle error
-        this.setState({
-          desplyErr: true,
-          messg: ` the weather not found`,
-          weatherSt: []
-        })
-
-
-      })
-  }
-  getWeathere=(lat,lon)=>{
-    
-    let url = `http://localhost:3000/weather/${lat}/${lon}`
-    axios.get(url).then(res => {
-    
       this.setState({
         weatherData: res.data,
-         displayWeather: true,
+        displayWeather: true,
       })
     })
       .catch((error) => {
         // handle error
         this.setState({
           desplyErr: true,
-          messg:  error + ` weather Not Found for the location`
+          messg: error + ` weather Not Found for the location`
         })
 
       })
   }
 
-  getMovies=(city)=>{
-    
-    let url = `http://localhost:3000/movies/${city.split(',')[0]}`
+  getMovies = (city) => {
+
+    let url = `http://localhost:8000/movies/${city.split(',')[0]}`
     axios.get(url).then(res => {
-    
+
       this.setState({
         movisData: res.data,
         displayMove: true,
@@ -115,7 +89,7 @@ console.log(city.split(',')[0].trim())
         // handle error
         this.setState({
           desplyErr: true,
-          messg:  error + ` movies Not Found for the location`
+          messg: error + ` movies Not Found for the location`
         })
 
       })
@@ -123,12 +97,12 @@ console.log(city.split(',')[0].trim())
   render() {
     return (
       <div>
-        <Container fluid style={{width:"20rem",marginTop:"3rem"}}>
+        <Container fluid style={{ width: "20rem", marginTop: "3rem" }}>
           <Row>
             <Col>
 
-              {this.state.desplyErr && <Alert  variant='danger'>
-              <span>{this.state.messg}</span>
+              {this.state.desplyErr && <Alert variant='danger'>
+                <span>{this.state.messg}</span>
               </Alert>}
             </Col>
           </Row>
@@ -163,15 +137,21 @@ console.log(city.split(',')[0].trim())
           </Card>
         </div>
 
-        {this.state.displayWeather && <>  {this.state.weatherData.map((ele,index) => {
+        {this.state.displayWeather && <>  {this.state.weatherData.map((ele, index) => {
           return (<Weather key={index} dateOfCountry={ele.date} description={ele.description} />)
         })} </>}
+        <div style={{
+          display: 'flex', flexDirection: "row",
+          flexWrap: "wrap",
+          alignItems: "flex-start"
+        }}>
+          {this.state.displayMove && this.state.movisData && <>  {this.state.movisData.map((ele, index) => {
+            return (<Movies key={index} title={ele.title} popularity={ele.popularity} overview={ele.overview}
+              imgSrc={ele.image_url} displayCard={this.state.displayWeather}
+            />)
+          })} </>}
+        </div>
 
-{this.state.displayMove && <>  {this.state.movisData.map((ele,index) => {
-          return (<Movies key={index} title={ele.title} popularity={ele.popularity} overview={ele.overview}
-          imgSrc={ele.image_url}
-          />)
-        })} </>}
       </div>
     );
   }

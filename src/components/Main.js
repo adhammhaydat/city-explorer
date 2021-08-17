@@ -37,7 +37,7 @@ export class Main extends Component {
         cityName: data.display_name,
         lat: `lat: ${data.lat}`,
         lon: `lon: ${data.lon}`,
-        mapUrl: `https://maps.locationiq.com/v3/staticmap?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&center=
+        mapUrl: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_L_IQ_API}&center=
         ${data.lat},${data.lon}&size=300x300&zoom=14&markers=icon:large-red-cutout&path=fillcolor:%2390EE90|weight:2|
         color:blue|enc:}woiBkrk}Mb@iKtCCEhBsD|C`,
         desplyErr: false
